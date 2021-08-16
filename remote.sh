@@ -20,13 +20,19 @@ func_question(){
 func_find_ip(){
 
         ip=$1
-        dev="$(cat "$direcrtory" | grep -i -w -c "$ip")"
-        if [ $dev -gt 0 ]
+        words='[a-zA-Z]'
+        if [[ $ip =~ $words ]]
         then
-                devices=($(cat "$direcrtory" | grep -i -w "$ip"))
-                device=${devices[0]}
+                dev="$(cat "$direcrtory" | grep -i -w -c "$ip")"
+                if [ $dev -gt 0 ]
+                then
+                        devices=($(cat "$direcrtory" | grep -i -w "$ip"))
+                        device=${devices[0]}
+                fi
+                echo "$device"
+        else
+                echo "$ip"
         fi
-        echo "$device"              
 }
 
 #func for remote ssh
