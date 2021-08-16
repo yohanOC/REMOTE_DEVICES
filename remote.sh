@@ -39,11 +39,17 @@ func_find_ip(){
 func_remote(){
         ip="$(func_find_ip $1)"
         option=$2
-        if [ $option == 1 ]
+        if ping -q -c2 "$ip" &>/dev/null
         then
-                ssh $username@$ip
+                if [ $option == 1 ]
+                then
+                        ssh $username@$ip
+                else
+                        telnet $ip
+                fi
         else
-                telnet $ip
+                echo this host unreach from this server
+                sleep 2
         fi
 }
 
