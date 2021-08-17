@@ -28,8 +28,12 @@ func_find_ip(){
                 then
                         devices=($(cat "$direcrtory" | grep -i -w "$ip"))
                         device=${devices[0]}
+                        func_remote $devices $option
                 else
                         echo Host $device not found please input by ip address
+                        sleep 1
+                        read -p 'Masukkan IP:' ip
+                        func_remote $ip $option
                 fi
                 echo "$device"
         else
@@ -40,7 +44,7 @@ func_find_ip(){
 #func for remote ssh
 func_remote(){
         ip="$(func_find_ip $1)"
-        option=$2
+        option="$(func_find_ip $2)"
         if ping -q -c2 "$ip" &>/dev/null
         then
                 if [ $option == 1 ]
@@ -63,7 +67,7 @@ while true
                 if [ $option  == 1 -o $option  == 2 ] #condition from question
                 then
                         read -p 'Masukkan IP/Hostname:' ip
-                        func_remote $ip $option
+                        func_find_ip $ip $option
                 elif [ $option == 3 ]
                 then
                         exit
