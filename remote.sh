@@ -13,7 +13,7 @@ func_question(){
         echo 1. ssh 
         echo 2. telnet
         echo 3. for quit or press ctrl+c
-        read -p 'Massukan Pilihan 1 or 2(only number): ' option
+        read -p 'Enter 1 or 2 (only number): ' option
 
 }
 #function for find ip in /etc/hosts
@@ -63,7 +63,7 @@ while true
                 func_question
                 if [ $option  == 1 -o $option  == 2 ] #condition from question
                 then
-                        read -p 'Masukkan IP/Hostname:' ip
+                        read -p 'Enter IP/Hostname:' ip
                         func_remote $ip $option
                 elif [ $option == 3 ]
                 then
