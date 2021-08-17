@@ -20,22 +20,19 @@ func_question(){
 func_find_ip(){
 
         ip=$1
-        words='[a-zA-Z]'
-        if [[ $ip =~ $words ]]
+        words='[a-zA-Z]' #dictionary from word
+        if [[ $ip =~ $words ]] #condition checking hostname or IP add
         then
                 dev="$(cat "$direcrtory" | grep -i -w -c "$ip")"
                 if [ $dev -gt 0 ]
                 then
                         devices=($(cat "$direcrtory" | grep -i -w "$ip"))
                         device=${devices[0]}
-                        func_remote $devices $option
+                        echo "$device"
                 else
-                        echo Host $device not found please input by ip address
-                        sleep 1
-                        read -p 'Masukkan IP:' ip
-                        func_remote $ip $option
+                        read -p 'Host '$ip' not found please enter IP :' ipa
+                        echo "$ipa"
                 fi
-                echo "$device"
         else
                 echo "$ip"
         fi
@@ -44,7 +41,7 @@ func_find_ip(){
 #func for remote ssh
 func_remote(){
         ip="$(func_find_ip $1)"
-        option="$(func_find_ip $2)"
+        option=$option
         if ping -q -c2 "$ip" &>/dev/null
         then
                 if [ $option == 1 ]
@@ -67,7 +64,7 @@ while true
                 if [ $option  == 1 -o $option  == 2 ] #condition from question
                 then
                         read -p 'Masukkan IP/Hostname:' ip
-                        func_find_ip $ip $option
+                        func_remote $ip $option
                 elif [ $option == 3 ]
                 then
                         exit
