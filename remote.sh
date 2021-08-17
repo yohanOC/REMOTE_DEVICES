@@ -28,6 +28,8 @@ func_find_ip(){
                 then
                         devices=($(cat "$direcrtory" | grep -i -w "$ip"))
                         device=${devices[0]}
+                else
+                        echo Host $device not found please input by ip address
                 fi
                 echo "$device"
         else
